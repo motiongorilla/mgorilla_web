@@ -2,9 +2,10 @@
 
 {% block content %}
     <h1>Delete Article</h1>
-    <p>Are you sure you want to delete an article?</p>
+    <p>Are you sure you want to delete "{{ article.title }}"?</p>
     <form method="POST">
         {% csrf_token %}
         <button type="submit">Delete</button>
     </form>
+    <a href="{% url 'home' %}">Back to home</a>
 {% endblock content %}
