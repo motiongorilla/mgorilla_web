@@ -7,9 +7,9 @@ WORKDIR /code
 
 RUN pip install poetry
 
-COPY pyproject.toml poetry.lock requirements.txt ./
+COPY requirements.txt ./
 
-RUN pip install django
+RUN pip install -r requirements.txt
 
 COPY . .
 
