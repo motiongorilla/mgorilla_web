@@ -1,14 +1,14 @@
-{% extends "app/base.html" %}
+{% extends "app/layouts/base_form.html" %}
 
-    {% block content %}
-    <h1>Update Article</h1>
-    <p>{{ article.word_count}} word{{ article.word_count | pluralize }}.</p>
-    <p>last updated: {{ article.updated_at | date:"jS F Y" }}</p>
-    <form method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">Update</button>
-    </form>
-    <a href="{% url 'home' %}">Back to home</a>
-    <a href="{% url 'delete_article' article.id %}">Delete article</a>
-    {% endblock content %}
+{% block content %}
+<h1>Update Article</h1>
+<p>{{ article.word_count}} word{{ article.word_count | pluralize }}.</p>
+<p>last updated: {{ article.updated_at | date:"jS F Y" }}</p>
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Update</button>
+</form>
+<a href="{% url 'home' %}">Back to home</a>
+<a href="{% url 'delete_article' article.id %}">Delete article</a>
+{% endblock content %}

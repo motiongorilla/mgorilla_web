@@ -1,0 +1,28 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+{% endblock content %}
+
+{% block page_js %}
+    <script>
+    const contentMarkdown = new EasyMDE({
+        element: document.getElementById("id_content"),
+        spellChecker: false,
+        status: true,
+        forceSync: true,
+        indentWithTabs: true,
+        placeholder: "Write something...",
+        toolbar: true,
+        toolbar: ["bold", "italic", "heading", "|", "quote", "code", "preview"]
+    });
+    const tweetMarkdown = new EasyMDE({
+        element: document.getElementById("id_twitter_post"),
+        spellChecker: true,
+        status: false,
+        forceSync: true,
+        indentWithTabs: false,
+        placeholder: "Write our tweet...",
+        toolbar: false
+    });
+    </script>
+{% endblock page_js %}
