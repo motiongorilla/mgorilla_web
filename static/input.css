@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.title {
+    @apply text-5xl font-semibold font-sans tracking-tight;
+}
+
+.subtitle{
+    @apply text-3xl font-medium tracking-tight;
+}
+
+.button {
+    @apply py-2 px-4 rounded font-medium text-lightshade;
+}
+
+.primary {
+    @apply bg-primary hover:bg-danger focus:outline-none focus:bg-red-700 shadow-md;
+}
+
+.secondary {
+    @apply text-sm bg-lightaccent hover:bg-lightaccenthover focus:outline-none focus:bg-lightaccenthover shadow-md;
+}
+
+.danger {
+    @apply bg-danger hover:bg-darkaccent focus:outline-none focus:bg-red-700 shadow-md;
+}
+
+.warning {
+    @apply bg-chilleanfire hover:bg-darkaccent focus:outline-none focus:bg-red-700 shadow-md;
+}
+
+.info {
+    @apply bg-woodsmoke hover:bg-gray-800 focus:outline-none focus:bg-gray-700 shadow-md;
+}
+
+.success {
+    @apply bg-pesto hover:bg-darkaccent focus:outline-none focus:bg-red-700 shadow-md;
+}
+
+.default {
+    @apply bg-gray-400 hover:bg-gray-500 focus:outline-none focus:bg-gray-600 shadow-md;
+}
+
+.EasyMDEContainer, textarea {
+    @apply rounded-md text-base leading-6 mb-4;
+}
+
+.EasyMDEContainer:has(textarea:focus), textarea:focus {
+    @apply shadow-md;
+}
+
+.form-field input {
+    @apply block text-darkshade shadow-sm focus:ring-darkaccent focus:border-darkaccent sm:text-sm border-darkshade rounded-md text-sm p-2 w-full;
+}

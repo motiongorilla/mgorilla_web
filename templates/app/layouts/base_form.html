@@ -1,19 +1,45 @@
 {% extends "app/base.html" %}
 
-{% block content %}
-{% endblock content %}
+{% load widget_tweaks%}
 
-{% block page_js %}
+    {% block content %}
+    <main class="max-w-screen-xl mx-auto mt-10">
+        <form method="POST">
+            {% csrf_token %}
+
+            {% render_field form.title class="text-4xl w-full rounded-md border-1 border-gray-200 focus:ring-1 focus:border-lightaccent focus:border-1 focus:ring-lightaccent" placeholder="Title for the article..." %}
+
+            <div class="flex gap-10 mb-5 mt-1 items-center">
+            {% render_field form.status class="text-xs border-none rounded-md uppercase" %}
+            {% block article_stats %}
+            {% endblock article_stats %}
+            </div>
+
+            <div class="flex items-center mb-4 gap-2">
+                {% block buttons %}
+                {% endblock buttons %}
+            </div>
+
+            {% render_field form.content rows=20 %}
+            <p class="text-xl font-semibold mb-2">{{ form.twitter_post.label }}</p>
+            {% render_field form.twitter_post rows=10 %}
+
+        </form>
+    </main>
+    {% endblock content %}
+
+    {% block page_js %}
     <script>
     const contentMarkdown = new EasyMDE({
         element: document.getElementById("id_content"),
         spellChecker: false,
-        status: true,
+        status: false,
         forceSync: true,
         indentWithTabs: true,
         placeholder: "Write something...",
         toolbar: true,
-        toolbar: ["bold", "italic", "heading", "|", "quote", "code", "preview"]
+        toolbar: ["bold", "italic", "heading", "|", "quote", "code", "preview"],
+        lineNumbers: true,
     });
     const tweetMarkdown = new EasyMDE({
         element: document.getElementById("id_twitter_post"),
@@ -22,7 +48,9 @@
         forceSync: true,
         indentWithTabs: false,
         placeholder: "Write our tweet...",
-        toolbar: false
+        toolbar: false,
+        lineNumbers: true,
+        maxHeight: "150px",
     });
     </script>
-{% endblock page_js %}
+    {% endblock page_js %}

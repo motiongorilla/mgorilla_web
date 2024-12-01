@@ -1,9 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from app.models import Article
 
+
+def index(request):
+    return render(request, "app/index.html")
 
 class ArticleListView(LoginRequiredMixin, ListView):
     template_name = "app/home.html"
