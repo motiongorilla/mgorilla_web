@@ -5,7 +5,7 @@
 <p>last updated: <span class="font-bold">{{ article.updated_at | date:"jS F Y" }}</span></p>
 {% endblock article_stats %}
 {% block buttons %}
-    <button type="submit" class="button success">Update article</button>
+    <button type="submit" class="button primarydk">Update article</button>
     <a href="{% url 'delete_article' article.id %}" class="button danger">Delete article</a>
     <a href="{% url 'home' %}" class="button default">Back to home</a>
 {% endblock buttons %}

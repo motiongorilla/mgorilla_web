@@ -3,4 +3,53 @@
 {% load allauth account %}
 
 {% block content %}
+    <main class="max-w-lg mx-auto mt-10 ">
+        <div class="flex flex-col bg-lightbg p-6 lg:p-12 rounded-md">
+            <div class="flex flex-col text-center">
+                <h1 class="font-semibold text-2xl tracking-tight text-textcolor">Create new account</h1>
+                <form method="POST" class="space-y-6 mb-4">
+                    {% csrf_token %}
+                    <div>
+                        <label class="sr-only" for="{{form.email.id_for_label}}">Email</label>
+                        <div class="form-field">
+                            {% render_field form.email %}
+                        </div>
+                    </div>
+                    <div>
+                        <label class="sr-only" for="{{form.password1.id_for_label}}">Password</label>
+                        <div class="form-field">
+                            {% render_field form.password1 %}
+                        </div>
+                        {% if form.password1.errors %}
+                        <div class="error [&>ul]:space-y-2">
+                            {{ form.password1.errors }}
+                        </div>
+                        {% endif %}
+                        <details class="text-sm rounded-md border border-secondarydark mt-2 text-left bg-secondarydark [&_svg]:open:rotate-90">
+                            <summary class="flex justify-between items-center font-semibold pt-1 pl-2 pr-2 pb-1">
+                                <div>Password requirements</div>
+                                <span>{% include "svgs/chevron.svg" with class="w-6 h-6" %}</span>
+                            </summary>
+                            <div class="bg-background px-2 py-2 [&>ul]:space-y-1">{{ form.password1.help_text | safe }}</div>
+                        </details>
+                    </div>
+                    <div>
+                        <label class="sr-only" for="{{form.password2.id_for_label}}">Password confirmation</label>
+                        <div class="form-field">
+                            {% render_field form.password2 %}
+                        </div>
+                    </div>
+                    <button type="submit" class="button primary">Create new account</button>
+                    <div>
+                        <p class="text-sm text-center">Already have an account? <a href="{% url 'account_login' %}" class="font-bold hover:underline">Log-in here.</a></p>
+                    </div>
+                    <div class="text-textcolor space-y-4 text-left">
+                        {% if SOCIALACCOUNT_ENABLED %}
+                        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
 {% endblock content %}

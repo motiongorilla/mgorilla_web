@@ -11,45 +11,69 @@
 }
 
 .button {
-    @apply py-2 px-4 rounded font-medium text-lightshade;
+    @apply py-2 px-4 rounded font-medium text-textcolor;
 }
 
 .primary {
-    @apply bg-primary hover:bg-danger focus:outline-none focus:bg-red-700 shadow-md;
+    @apply bg-primary focus:outline-none focus:bg-secondary shadow-md text-background glow;
+}
+
+.primarydk {
+    @apply bg-primarydark hover:bg-secondarydark focus:outline-none focus:bg-secondary shadow-md text-textcolor;
 }
 
 .secondary {
-    @apply text-sm bg-lightaccent hover:bg-lightaccenthover focus:outline-none focus:bg-lightaccenthover shadow-md;
+    @apply bg-secondary text-background hover:bg-accent focus:outline-none focus:bg-accent shadow-md;
 }
 
 .danger {
-    @apply bg-danger hover:bg-darkaccent focus:outline-none focus:bg-red-700 shadow-md;
+    @apply bg-danger hover:bg-orange-700 focus:outline-none focus:bg-important shadow-md;
 }
 
 .warning {
-    @apply bg-chilleanfire hover:bg-darkaccent focus:outline-none focus:bg-red-700 shadow-md;
+    @apply bg-warning hover:bg-danger focus:outline-none focus:opacity-60 shadow-md;
 }
 
 .info {
-    @apply bg-woodsmoke hover:bg-gray-800 focus:outline-none focus:bg-gray-700 shadow-md;
+    @apply bg-infobg hover:bg-lightbg focus:outline-none focus:bg-gray-900 shadow-md;
 }
 
 .success {
-    @apply bg-pesto hover:bg-darkaccent focus:outline-none focus:bg-red-700 shadow-md;
+    @apply bg-success hover:bg-infobg focus:outline-none focus:bg-red-700 shadow-md;
 }
 
 .default {
-    @apply bg-gray-400 hover:bg-gray-500 focus:outline-none focus:bg-gray-600 shadow-md;
+    @apply bg-lightbg hover:bg-infobg focus:outline-none focus:bg-background shadow-md;
+}
+
+.CodeMirror-lines {
+    @apply text-textcolor;
+}
+
+.CodeMirror-selectedtext {
+    @apply text-background;
+}
+
+.EasyMDEContainer, .CodeMirror {
+    @apply !bg-inherit text-textcolor;
 }
 
 .EasyMDEContainer, textarea {
-    @apply rounded-md text-base leading-6 mb-4;
+    @apply leading-6 mb-4 ;
 }
 
 .EasyMDEContainer:has(textarea:focus), textarea:focus {
-    @apply shadow-md;
+    @apply shadow-md bg-lightbg;
 }
 
 .form-field input {
-    @apply block text-darkshade shadow-sm focus:ring-darkaccent focus:border-darkaccent sm:text-sm border-darkshade rounded-md text-sm p-2 w-full;
+    @apply block bg-textcolor text-background shadow-sm focus:ring-accent focus:bg-textcolor focus:border-accent sm:text-sm border-secondary rounded-md text-sm p-2 w-full;
+}
+
+.glow:hover {
+    box-shadow: inset 0 0 15px 1px #43e5b799, 0 0 10px 1px #43e5b799;
+}
+
+.error {
+    @apply p-2 my-2 text-sm text-warning bg-danger bg-opacity-10 rounded-md border-2 border-danger text-left;
 }
