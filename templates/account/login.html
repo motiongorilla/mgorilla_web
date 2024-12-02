@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="flex items-center">
-                {% render_field form.remember class="focus:ring-accent focus:border-accent h-4 w-4 text-textcolor border-accent rounded" %}
+                {% render_field form.remember class="bg-lightbg focus:ring-secondary focus:bg-secondary focus:border-secondary h-4 w-4 border-secondarydark rounded checked:bg-secondary text-secondary" %}
                 <label class="ml-2 text-sm text-textcolor" for="{{form.remember.id_for_label}}">
                     {{ form.remember.label }}
                 </label>

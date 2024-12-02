@@ -77,3 +77,15 @@
 .error {
     @apply p-2 my-2 text-sm text-warning bg-danger bg-opacity-10 rounded-md border-2 border-danger text-left;
 }
+
+.article-status-draft {
+    @apply bg-subinfo;
+}
+
+.article-status-inprogress {
+    @apply bg-warning text-background;
+}
+
+.article-status-published {
+    @apply bg-highlight text-background;
+}

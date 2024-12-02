@@ -4,13 +4,15 @@
 
     {% block content %}
     <main class="max-w-screen-xl mx-auto mt-10">
-        <form method="POST">
+        <form method="POST" x-data="{
+            articleStatus: ''
+            }">
             {% csrf_token %}
 
-            {% render_field form.title class="text-4xl bg-lightbg w-full rounded-md border-1 border-secondary focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" placeholder="Title for the article..." %}
+            {% render_field form.title class="text-3xl py-2 bg-lightbg w-full rounded-md focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" placeholder="Title for the article..." %}
 
             <div class="flex gap-10 mb-5 mt-1 items-center">
-            {% render_field form.status class="text-xs border-none rounded-md uppercase" %}
+                {% render_field form.status class="text-xs border-none rounded-md uppercase" x-bind::class="`article-status-${articleStatus}`" x-model.fill="articleStatus" %}
             {% block article_stats %}
             {% endblock article_stats %}
             </div>

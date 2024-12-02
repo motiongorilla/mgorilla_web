@@ -1642,19 +1642,9 @@ select {
   border-style: none;
 }
 
-.border-accent {
-  --tw-border-opacity: 1;
-  border-color: rgb(67 229 183 / var(--tw-border-opacity, 1));
-}
-
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
-}
-
-.border-secondary {
-  --tw-border-opacity: 1;
-  border-color: rgb(20 163 173 / var(--tw-border-opacity, 1));
 }
 
 .border-secondarydark {
@@ -1922,6 +1912,11 @@ select {
 .text-orange-500 {
   --tw-text-opacity: 1;
   color: rgb(249 115 22 / var(--tw-text-opacity, 1));
+}
+
+.text-secondary {
+  --tw-text-opacity: 1;
+  color: rgb(20 163 173 / var(--tw-text-opacity, 1));
 }
 
 .text-textcolor {
@@ -2248,6 +2243,30 @@ select {
   color: rgb(227 180 102 / var(--tw-text-opacity, 1));
 }
 
+.article-status-draft {
+  --tw-bg-opacity: 1;
+  background-color: rgb(80 80 80 / var(--tw-bg-opacity, 1));
+}
+
+.article-status-inprogress {
+  --tw-bg-opacity: 1;
+  background-color: rgb(227 180 102 / var(--tw-bg-opacity, 1));
+  --tw-text-opacity: 1;
+  color: rgb(33 33 33 / var(--tw-text-opacity, 1));
+}
+
+.article-status-published {
+  --tw-bg-opacity: 1;
+  background-color: rgb(125 214 207 / var(--tw-bg-opacity, 1));
+  --tw-text-opacity: 1;
+  color: rgb(33 33 33 / var(--tw-text-opacity, 1));
+}
+
+.checked\:bg-secondary:checked {
+  --tw-bg-opacity: 1;
+  background-color: rgb(20 163 173 / var(--tw-bg-opacity, 1));
+}
+
 .hover\:underline:hover {
   text-decoration-line: underline;
 }
@@ -2262,14 +2281,14 @@ select {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.focus\:border-accent:focus {
-  --tw-border-opacity: 1;
-  border-color: rgb(67 229 183 / var(--tw-border-opacity, 1));
-}
-
 .focus\:border-secondary:focus {
   --tw-border-opacity: 1;
   border-color: rgb(20 163 173 / var(--tw-border-opacity, 1));
+}
+
+.focus\:bg-secondary:focus {
+  --tw-bg-opacity: 1;
+  background-color: rgb(20 163 173 / var(--tw-bg-opacity, 1));
 }
 
 .focus\:ring-1:focus {
@@ -2281,6 +2300,11 @@ select {
 .focus\:ring-accent:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(67 229 183 / var(--tw-ring-opacity, 1));
+}
+
+.focus\:ring-secondary:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(20 163 173 / var(--tw-ring-opacity, 1));
 }
 
 @media (min-width: 640px) {
