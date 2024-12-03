@@ -1,13 +1,17 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.views.generic import CreateView, DeleteView, ListView, TemplateView, UpdateView
 
 from app.models import Article
 
 
-def index(request):
-    return render(request, "app/index.html")
+class LandingView(TemplateView):
+    template_name = "app/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['articles'] = Article.objects.all().order_by("-created_at")
+        return context
 
 class ArticleListView(LoginRequiredMixin, ListView):
     template_name = "app/home.html"

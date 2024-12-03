@@ -89,3 +89,7 @@
 .article-status-published {
     @apply bg-highlight text-background;
 }
+
+.animate-gradient {
+	animation: gradient-shift 15s ease infinite;
+}

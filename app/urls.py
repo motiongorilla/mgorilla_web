@@ -1,9 +1,9 @@
 from django.urls import path
 
-from app.views import ArticleCreateView, ArticleDeleteView, ArticleListView, ArticleUpdateView, index
+from app.views import ArticleCreateView, ArticleDeleteView, ArticleListView, ArticleUpdateView, LandingView
 
 urlpatterns = [
-    path("", index, name="index"),
+    path("", LandingView.as_view(), name="index"),
     path("articles/", ArticleListView.as_view(), name="home"),
     path("create/", ArticleCreateView.as_view(), name="create_article"),
     path("<int:pk>/update/", ArticleUpdateView.as_view(), name="update_article"),

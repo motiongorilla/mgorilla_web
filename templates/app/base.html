@@ -16,7 +16,7 @@
     <body class="bg-background text-textcolor">
         {% url 'create_article' as create_new_url %}
         {% url 'home' as articles_page %}
-        <nav class="flex justify-between items-center px-10 py-4 border-b border-gray-300 shadow-md bg-lightbg">
+        <nav class="relative flex justify-between items-center px-10 py-4 border-b border-gray-300 shadow-md bg-lightbg z-10">
             <div class="flex">
                 <a href="{% url 'index' %}" class="text-xl text-textcolor font-bold">Motiongorilla</a>
             </div>

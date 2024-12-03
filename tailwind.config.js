@@ -20,6 +20,16 @@ module.exports = {
                 important: "#cd4277",
                 subinfo: "#505050",
                 highlight: "#7dd6cf",
+                blacky: "#151515",
+            },
+            keyframes: {
+                'gradient-shift': {
+                    '0%, 100%': { backgroundPosition: '0% 50%' },
+                    '50%': { backgroundPosition: '100% 50%' },
+                }
+            },
+            animation: {
+                'gradient': 'gradient-shift 15s ease infinite',
             },
         },
     },
