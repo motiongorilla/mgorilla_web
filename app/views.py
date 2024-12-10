@@ -13,6 +13,19 @@ class LandingView(TemplateView):
         context['articles'] = Article.objects.all().order_by("-created_at")
         return context
 
+
+class ReadArticleView(TemplateView):
+    template_name = "app/layouts/article_view.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        article_id = self.kwargs.get("pk")
+        article = Article.objects.get(pk=article_id)
+        context['article'] = article
+        context['article_content_html'] = article.get_content_as_html()
+        return context
+
+
 class ArticleListView(LoginRequiredMixin, ListView):
     template_name = "app/home.html"
     model = Article

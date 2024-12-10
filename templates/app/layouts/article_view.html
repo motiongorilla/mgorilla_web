@@ -1,0 +1,9 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+<main>
+    <div>{{ article.title }}</div>
+    <div>{{ article_content_html|safe }}</div>
+
+</main>
+{% endblock content %}
