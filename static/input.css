@@ -3,28 +3,37 @@
 @tailwind utilities;
 
 @layer base {
-  h1 {
-    @apply text-4xl font-bold text-gray-900;
-  }
-  h2 {
-    @apply text-3xl font-semibold text-gray-800;
-  }
-  h3 {
-    @apply text-2xl font-medium text-gray-700;
-  }
-  h4 {
-    @apply text-xl font-medium text-gray-700;
-  }
-  h5 {
-    @apply text-lg font-medium text-gray-700;
-  }
-  h6 {
-    @apply text-base font-medium text-gray-700;
-  }
+    h1 {
+        @apply text-4xl font-black text-textcolor font-sans;
+    }
+    h2 {
+        @apply text-3xl font-extrabold text-textcolor font-sans;
+    }
+    h3 {
+        @apply text-2xl font-bold text-textcolor font-sans;
+    }
+    h4 {
+        @apply text-xl font-semibold text-textcolor font-sans;
+    }
+    h5 {
+        @apply text-lg font-medium text-textcolor font-sans;
+    }
+    h6 {
+        @apply text-base font-medium text-textcolor font-sans;
+    }
+    pre {
+        @apply bg-infobg px-4 py-2 rounded mt-4 tracking-tighter font-sans;
+    }
+    p {
+        @apply text-textcolor leading-7 tracking-normal py-1;
+    }
+    img {
+        @apply my-4;
+    }
 }
 
 .title {
-    @apply text-5xl font-semibold font-sans tracking-tight;
+    @apply text-5xl font-bold font-sans tracking-tight;
 }
 
 .subtitle{

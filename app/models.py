@@ -52,5 +52,5 @@ class Article(models.Model):
         super().save(*args, **kwargs)
 
     def get_content_as_html(self):
-        return markdown.markdown(self.content)
+        return markdown.markdown(self.content, extensions=["markdown.extensions.fenced_code"])
 
