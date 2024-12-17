@@ -1,55 +1,79 @@
 {% extends "app/base.html" %}
 
     {% block content %}
-    <div class="relative h-full w-full">
+    <!-- Content part -->
+    <main class="flex flex-col mx-auto relative z-10">
+        <div class="flex px-10 -mt-8 h-[80vh] max-w-screen-xl  gap-10 mx-auto">
+            <div class="bg-background p-4 border border-success w-2/3 m-auto shadow-lg shadow-blacky rounded-sm -top-16">
+                <div class="text-lg font-mono">
+                    <p class="-mb-3">
+                        <span class="font-black text-primary">~</span><span class="ml-2 font-light"><span class="text-warning">request</span> <span class="text-subinfo">introduction</span></span>
+                    </p>
+                    <p class="ml-4">
+                        <span>Hello, <span class="font-semibold text-success">Yegor here!</span> You've come to my small tech playground.</span>
+                    </p>
 
-        <div class="absolute inset-0 bg-transparent h-full w-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:32px_32px] -z-100"></div>
-
-        <!-- Content part -->
-        <main class="flex flex-col mx-auto relative z-10">
-            <div class="flex px-10 mt-20 columns-2 gap-10 h-1/2 w-full">
-                <div class="mt-20 bg-background px-4 py-10 border border-success m-auto max-w-screen-sm shadow-lg shadow-blacky rounded-sm -top-16">
-                    <span class="title mb-4">>Hello, Yegor here! </span>
-                        <p class="font-semibold text-xl mb-4">You've come to my small tech playground.</p>
-                    <p class="text-lg font-sans leading-tight">
+                    <p class="-mb-3">
+                        <span class="font-black text-primary">~</span><span class="ml-2 font-light"><span class="text-warning">uname</span> <span class="text-subinfo">-a</span></span>
+                    </p>
+                    <p class="ml-4">
                         This is a space where I share some of my experience, try out ideas, deploy my web-apps and other stuff interesting to me.
                         And it so happens that this is also my portofolio.
                     </p>
-                    <p class="leading-tight">
-                        You can contact me at:<br>
-                        <a class="hover:underline font-semibold" href="#">yegor.omelchenko@gmail</a>
+
+                    <p class="-mb-3">
+                        <span class="font-black text-primary">~</span><span class="ml-2 font-light">
+                    </p>
+                    <p class="-mb-3">
+                        <span class="font-black text-primary">~</span><span class="ml-2 font-light"><span class="text-warning">ifconfig</span></span>
+                    </p>
+                    <p class="ml-4">
+                        You can contact me at:
+                        <a class="hover:underline font-semibold text-highlight
+                            relative w-[max-content] before:absolute before:inset-0 before:bg-background
+                            before:animate-[typewriter_4s_steps(26)_forwards]" href="#">yegor.omelchenko@gmail.com</a>
+                    </p>
+                    <p class="-mb-3">
+                        <span class="font-black text-primary">~</span><span class="ml-2 fill-textcolor animate-blink">
+                            <svg width="12" height="24" xmlns="http://www.w3.org/2000/svg" class="inline ">
+                                <rect width="12" height="24" x="0" y="0" rx="1" ry="1" />
+                            </svg>
+                        </span>
                     </p>
                 </div>
-                <div>
-<img src="https://e7.pngegg.com/pngimages/88/722/png-clipart-user-interface-system-console-computer-terminal-go-javascript-shell-command-linux-text-computer-program.png">
-                </div>
             </div>
+            <div class="flex flex-col items-center w-1/3 gap-6 m-auto">
+                <div class="border rounded-sm border-subinfo w-32 h-32"></div>
+                <div class="border rounded-sm border-subinfo w-32 h-32"></div>
+                <div class="border rounded-sm border-subinfo w-32 h-32"></div>
+            </div>
+        </div>
 
-            {% if articles %}
-            {% with total_articles=articles|length %}
-            {% with display_count=total_articles|divisibleby:4|add:total_articles %}
-            <div class="max-w-screen-2xl mx-auto p-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4 auto-rows-fr auto-cols-fr">
-                    {% for article in articles %}
-                    {% if forloop.counter <= 6 %}
-                    <div class="bg-background p-4 border border-danger rounded-sm shadow-md shadow-blacky text-textcolor flex flex-col justify-between h-full">
-                        <div>
-                            <a class="text-2xl block font-semibold mb-4 h-16 overflow-hidden">{{article.title}}</a>
-                            <p class="text-sm leading-tight">{{ article.content | truncatechars:150 }}</p>
-                        </div>
-                        <a class="font-semibold text-warning hover:underline text-right" href="{% url 'read_article' article.id %}">Read more...</a>
+        <div class="max-w-screen-2xl mx-auto p-4">
+            <p class="font-mono text-2xl font-bold mt-2"> <span class="text-warning">></span> Articles</p>
+        {% if articles %}
+        {% with total_articles=articles|length %}
+        {% with display_count=total_articles|divisibleby:4|add:total_articles %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4 auto-cols-fr">
+                {% for article in articles %}
+                {% if forloop.counter <= 6 %}
+                <div class="flex flex-col bg-background p-4 border border-dangermain rounded-sm shadow-md shadow-blacky text-textcolor justify-between h-full">
+                    <div>
+                        <a class="flex items-center text-2xl block text-left font-bold font-mono tracking-tight h-16 overflow-hidden hover:text-highlight my-auto" href="{% url 'read_article' article.id %}">{{article.title}}</a>
+                        <span id="article_summary">{{ article.get_content_as_html|truncatechars:200|safe }}</span>
                     </div>
-                    {% endif %}
-                    {% endfor %}
+                    <a class="font-semibold text-warning hover:underline text-right" href="{% url 'read_article' article.id %}">Read more...</a>
                 </div>
+                {% endif %}
+                {% endfor %}
             </div>
-            {% endwith %}
-            {% endwith %}
-            {% else %}
-            <p>There're no articles to look at. Create a new one!</p>
-            {% endif %}
-        </main>
-    </div>
+        </div>
+        {% endwith %}
+        {% endwith %}
+        {% else %}
+        <p>There're no articles to look at. Create a new one!</p>
+        {% endif %}
+    </main>
     {% endblock content %}
     {% block page_js %}
     {% endblock page_js %}

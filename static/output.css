@@ -817,8 +817,8 @@ pre {
 }
 
 p {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   line-height: 1.75rem;
   letter-spacing: 0em;
   --tw-text-opacity: 1;
@@ -828,6 +828,40 @@ p {
 img {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.container {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
 }
 
 .prose {
@@ -1347,6 +1381,10 @@ img {
   border-width: 0;
 }
 
+.pointer-events-none {
+  pointer-events: none;
+}
+
 .static {
   position: static;
 }
@@ -1380,6 +1418,19 @@ img {
   margin-right: auto;
 }
 
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.-mb-3 {
+  margin-bottom: -0.75rem;
+}
+
+.-mt-8 {
+  margin-top: -2rem;
+}
+
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -1404,8 +1455,8 @@ img {
   margin-left: 0.5rem;
 }
 
-.ml-20 {
-  margin-left: 5rem;
+.ml-4 {
+  margin-left: 1rem;
 }
 
 .mt-1 {
@@ -1420,36 +1471,8 @@ img {
   margin-top: 0.5rem;
 }
 
-.mt-20 {
-  margin-top: 5rem;
-}
-
 .mt-\[0\.5px\] {
   margin-top: 0.5px;
-}
-
-.-mt-20 {
-  margin-top: -5rem;
-}
-
-.-mt-10 {
-  margin-top: -2.5rem;
-}
-
-.-mt-40 {
-  margin-top: -10rem;
-}
-
-.-mt-4 {
-  margin-top: -1rem;
-}
-
-.-mt-2 {
-  margin-top: -0.5rem;
-}
-
-.ml-40 {
-  margin-left: 10rem;
 }
 
 .block {
@@ -1458,6 +1481,10 @@ img {
 
 .inline-block {
   display: inline-block;
+}
+
+.inline {
+  display: inline;
 }
 
 .flex {
@@ -1472,6 +1499,10 @@ img {
   height: 4rem;
 }
 
+.h-32 {
+  height: 8rem;
+}
+
 .h-4 {
   height: 1rem;
 }
@@ -1480,20 +1511,24 @@ img {
   height: 1.5rem;
 }
 
+.h-\[80vh\] {
+  height: 80vh;
+}
+
 .h-full {
   height: 100%;
 }
 
-.h-screen {
-  height: 100vh;
+.w-1\/3 {
+  width: 33.333333%;
 }
 
-.h-dvh {
-  height: 100dvh;
+.w-2\/3 {
+  width: 66.666667%;
 }
 
-.h-1\/2 {
-  height: 50%;
+.w-32 {
+  width: 8rem;
 }
 
 .w-4 {
@@ -1502,6 +1537,11 @@ img {
 
 .w-6 {
   width: 1.5rem;
+}
+
+.w-\[max-content\] {
+  width: -moz-max-content;
+  width: max-content;
 }
 
 .w-full {
@@ -1524,12 +1564,26 @@ img {
   max-width: 1536px;
 }
 
-.max-w-screen-sm {
-  max-width: 640px;
-}
-
 .max-w-screen-xl {
   max-width: 1280px;
+}
+
+.transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+@keyframes caret_blink {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50%, 75% {
+    opacity: 0;
+  }
+}
+
+.animate-blink {
+  animation: caret_blink 1.4s ease-in-out infinite;
 }
 
 @keyframes gradient-shift {
@@ -1546,17 +1600,8 @@ img {
   animation: gradient-shift 15s ease infinite;
 }
 
-.columns-2 {
-  -moz-columns: 2;
-       columns: 2;
-}
-
 .auto-cols-fr {
   grid-auto-columns: minmax(0, 1fr);
-}
-
-.auto-rows-fr {
-  grid-auto-rows: minmax(0, 1fr);
 }
 
 .grid-cols-1 {
@@ -1635,7 +1680,7 @@ img {
   border-style: none;
 }
 
-.border-danger {
+.border-dangermain {
   --tw-border-opacity: 1;
   border-color: rgb(205 94 66 / var(--tw-border-opacity, 1));
 }
@@ -1645,9 +1690,19 @@ img {
   border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
 }
 
+.border-infobg {
+  --tw-border-opacity: 1;
+  border-color: rgb(33 40 43 / var(--tw-border-opacity, 1));
+}
+
 .border-secondarydark {
   --tw-border-opacity: 1;
   border-color: rgb(29 72 75 / var(--tw-border-opacity, 1));
+}
+
+.border-subinfo {
+  --tw-border-opacity: 1;
+  border-color: rgb(80 80 80 / var(--tw-border-opacity, 1));
 }
 
 .border-success {
@@ -1668,14 +1723,6 @@ img {
 .bg-secondarydark {
   --tw-bg-opacity: 1;
   background-color: rgb(29 72 75 / var(--tw-bg-opacity, 1));
-}
-
-.bg-transparent {
-  background-color: transparent;
-}
-
-.bg-\[linear-gradient\(to_right\2c \#80808012_1px\2c transparent_1px\)\2c linear-gradient\(to_bottom\2c \#80808012_1px\2c transparent_1px\)\] {
-  background-image: linear-gradient(to right,#80808012 1px,transparent 1px),linear-gradient(to bottom,#80808012 1px,transparent 1px);
 }
 
 .bg-gradient-to-br {
@@ -1701,8 +1748,8 @@ img {
   background-size: 400% 400%;
 }
 
-.bg-\[size\:32px_32px\] {
-  background-size: 32px 32px;
+.fill-textcolor {
+  fill: #d1d1d1;
 }
 
 .p-2 {
@@ -1727,19 +1774,9 @@ img {
   padding-right: 0.5rem;
 }
 
-.px-4 {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
 .py-0\.5 {
   padding-top: 0.125rem;
   padding-bottom: 0.125rem;
-}
-
-.py-10 {
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
 }
 
 .py-2 {
@@ -1780,8 +1817,8 @@ img {
   text-align: right;
 }
 
-.font-sans {
-  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 .font-serif {
@@ -1818,8 +1855,16 @@ img {
   line-height: 1rem;
 }
 
+.font-black {
+  font-weight: 900;
+}
+
 .font-bold {
   font-weight: 700;
+}
+
+.font-light {
+  font-weight: 300;
 }
 
 .font-semibold {
@@ -1834,17 +1879,33 @@ img {
   font-style: italic;
 }
 
-.leading-tight {
-  line-height: 1.25;
-}
-
 .tracking-tight {
   letter-spacing: -0.025em;
+}
+
+.text-highlight {
+  --tw-text-opacity: 1;
+  color: rgb(125 214 207 / var(--tw-text-opacity, 1));
+}
+
+.text-primary {
+  --tw-text-opacity: 1;
+  color: rgb(13 162 217 / var(--tw-text-opacity, 1));
 }
 
 .text-secondary {
   --tw-text-opacity: 1;
   color: rgb(20 163 173 / var(--tw-text-opacity, 1));
+}
+
+.text-subinfo {
+  --tw-text-opacity: 1;
+  color: rgb(80 80 80 / var(--tw-text-opacity, 1));
+}
+
+.text-success {
+  --tw-text-opacity: 1;
+  color: rgb(126 142 80 / var(--tw-text-opacity, 1));
 }
 
 .text-textcolor {
@@ -1872,6 +1933,20 @@ img {
 .shadow-blacky {
   --tw-shadow-color: #151515;
   --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-transparent {
+  --tw-shadow-color: transparent;
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+#article_summary p {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  letter-spacing: -0.05em;
+  --tw-text-opacity: 1;
+  color: rgb(80 80 80 / var(--tw-text-opacity, 1));
 }
 
 .title {
@@ -2171,9 +2246,85 @@ img {
   animation: gradient-shift 15s ease infinite;
 }
 
+.dot {
+  position: absolute;
+  inset: 0;
+  height: 200%;
+  width: 100%;
+  background-position: center;
+  background-image: radial-gradient(#e5e7eb10 1px, transparent 1px);
+  background-size: 64px 64px;
+  z-index: -5;
+  transition: transform 1s ease-out;
+}
+
+.grid-cell-bg {
+  position:absolute;
+  inset: 0;
+  height: 200%;
+  width: 100%;
+  background-color: transparent;
+  background-image: linear-gradient(to right,#80808008 1px,transparent 1px),
+                    linear-gradient(to bottom,#80808008 1px,transparent 1px);
+  background-position: center;
+  background-size:32px 32px;
+  background-attachment: fixed;
+  z-index: -10;
+  transition: transform 1s ease-out;
+}
+
+.feathered-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
+
+.lines-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* Ensure lines don't interfere with other elements */
+}
+
+.before\:absolute::before {
+  content: var(--tw-content);
+  position: absolute;
+}
+
+.before\:inset-0::before {
+  content: var(--tw-content);
+  inset: 0px;
+}
+
+@keyframes typewriter {
+  to {
+    content: var(--tw-content);
+    left: 100%;
+  }
+}
+
+.before\:animate-\[typewriter_4s_steps\(26\)_forwards\]::before {
+  content: var(--tw-content);
+  animation: typewriter 4s steps(26) forwards;
+}
+
+.before\:bg-background::before {
+  content: var(--tw-content);
+  --tw-bg-opacity: 1;
+  background-color: rgb(33 33 33 / var(--tw-bg-opacity, 1));
+}
+
 .checked\:bg-secondary:checked {
   --tw-bg-opacity: 1;
   background-color: rgb(20 163 173 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:text-highlight:hover {
+  --tw-text-opacity: 1;
+  color: rgb(125 214 207 / var(--tw-text-opacity, 1));
 }
 
 .hover\:underline:hover {

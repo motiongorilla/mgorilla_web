@@ -16,29 +16,42 @@
     <body class="inset-0 bg-gradient-to-br from-lightbg via-background to-blacky animate-gradient bg-[length:400%_400%] text-textcolor">
         {% url 'create_article' as create_new_url %}
         {% url 'home' as articles_page %}
-        <nav class="relative flex justify-between items-center px-10 py-4 border-b border-gray-300 shadow-md bg-lightbg z-10">
-            <div class="flex">
-                <a href="{% url 'index' %}" class="text-xl text-textcolor font-bold">Motiongorilla</a>
-            </div>
-            <div class="flex justify-end items-center gap-6">
-                {% if user.is_authenticated %}
-                <a href="{% if request.path != create_new_url %}{{create_new_url}}{% else %}#{% endif %}" class="button primary">Create new article</a>
-                <form method="POST" action="{% url 'account_logout' %}">
-                    {% csrf_token %}
-                    <a href="{{articles_page}}" class="hover:underline text-textcolor {% if request.path == articles_page %} font-semibold {% endif %}">My Articles</a>
-                    <button class="hover:underline text-textcolor ml-2" type="submit">Log out</button>
-                </form>
-                {% else %}
-                <a href="{% url 'account_login' %}" class="button primary text-sm">Log in</a>
-                <a href="{% url 'account_signup' %}" class="button secondary text-sm">Create new account</a>
-                {% endif %}
-            </div>
-        </nav>
+        <div class="relative h-full w-full overflow-hidden">
+            <nav class="relative flex justify-between items-center px-10 py-4 border-b border-gray-300 shadow-md bg-lightbg z-10">
+                <div class="flex">
+                    <a href="{% url 'index' %}" class="text-xl text-textcolor font-bold">Motiongorilla</a>
+                </div>
+                <div class="flex justify-end items-center gap-6">
+                    {% if user.is_authenticated %}
+                    <a href="{% if request.path != create_new_url %}{{create_new_url}}{% else %}#{% endif %}" class="button primary">Create new article</a>
+                    <form method="POST" action="{% url 'account_logout' %}">
+                        {% csrf_token %}
+                        <a href="{{articles_page}}" class="hover:underline text-textcolor {% if request.path == articles_page %} font-semibold {% endif %}">My Articles</a>
+                        <button class="hover:underline text-textcolor ml-2" type="submit">Log out</button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'account_login' %}" class="button primary text-sm">Log in</a>
+                    <a href="{% url 'account_signup' %}" class="button secondary text-sm">Create new account</a>
+                    {% endif %}
+                </div>
+            </nav>
+            <div class="grid-cell-bg"></div>
+            <div class="dot"></div>
             {% block content %}
             {% endblock content %}
             {% block page_js %}
             {% endblock page_js %}
-
+        </div>
     </body>
+    <script>
+    document.addEventListener('scroll', function() {
+        const scrollPosition = window.pageYOffset;
+        const dot = document.querySelector('.dot');
+        const gridCellBg = document.querySelector('.grid-cell-bg');
 
+        // Adjust the speed of the parallax effect
+        dot.style.transform = `translateY(-${scrollPosition * 0.1}px)`;
+        gridCellBg.style.transform = `translateY(-${scrollPosition * 0.1}px)`;
+    });
+    </script>
 </html>
