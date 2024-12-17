@@ -25,9 +25,9 @@
             <article class="prose max-w-none bg-lightbg">
                 {% render_field form.content rows=20 %}
             </article>
-                <p class="text-xl font-semibold mb-2">{{ form.twitter_post.label }}</p>
+                <p class="text-xl font-semibold mb-2">{{ form.post_summary.label }}</p>
             <article class="prose max-w-none bg-lightbg">
-                {% render_field form.twitter_post rows=10 %}
+                {% render_field form.post_summary rows=10 %}
                 </article>
 
         </form>
@@ -47,7 +47,7 @@
         toolbar: ["bold", "italic", "heading", "|", "quote", "code", "preview"],
     });
     const tweetMarkdown = new EasyMDE({
-        element: document.getElementById("id_twitter_post"),
+        element: document.getElementById("id_post_summary"),
         spellChecker: true,
         status: false,
         forceSync: true,

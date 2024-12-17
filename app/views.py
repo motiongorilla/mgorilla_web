@@ -5,6 +5,15 @@ from django.views.generic import CreateView, DeleteView, ListView, TemplateView,
 from app.models import Article
 
 
+class ArticlesListView(ListView):
+    template_name = "app/blog_list.html"
+    model = Article
+    context_object_name = "articles"
+
+    def get_queryset(self):
+        return Article.objects.order_by("-created_at")
+
+
 class LandingView(TemplateView):
     template_name = "app/index.html"
 
@@ -26,8 +35,8 @@ class ReadArticleView(TemplateView):
         return context
 
 
-class ArticleListView(LoginRequiredMixin, ListView):
-    template_name = "app/home.html"
+class DashboardArticleListView(LoginRequiredMixin, ListView):
+    template_name = "app/dashboard.html"
     model = Article
     context_object_name = "articles"
 
@@ -38,8 +47,8 @@ class ArticleListView(LoginRequiredMixin, ListView):
 class ArticleCreateView(LoginRequiredMixin, CreateView):
     template_name = "app/create_article.html"
     model = Article
-    fields = ["title", "status", "content", "twitter_post"]
-    success_url = reverse_lazy("home")
+    fields = ["title", "status", "content", "post_summary"]
+    success_url = reverse_lazy("dashboard")
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
@@ -49,8 +58,8 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
 class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = "app/update_article.html"
     model = Article
-    fields = ["title", "status", "content", "twitter_post"]
-    success_url = reverse_lazy("home")
+    fields = ["title", "status", "content", "post_summary"]
+    success_url = reverse_lazy("dashboard")
     context_object_name = "article"
 
     def test_func(self):
@@ -60,7 +69,7 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     template_name = "app/delete_article.html"
     model = Article
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("dashboard")
     context_object_name = "article"
 
     def test_func(self):

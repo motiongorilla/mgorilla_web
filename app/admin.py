@@ -1,17 +1,17 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from app.models import Article, UserProfile
+from app.models import Article, Tag, UserProfile
 
 
 class ArticleAdmin(admin.ModelAdmin):
     # changing how article model looks at the admin panel.
-    list_display = ("title", "word_count", "status", "created_at", "updated_at",)
+    list_display = ("title", "status", "created_at", "updated_at",)
     list_filter = ("status", "updated_at",)
-    search_fields = ("title", "content",)
+    search_fields = ("title", "content", "tags",)
     date_hierarchy = "created_at"
-    ordering = ("created_at", "updated_at",)
-    readonly_fields = ("word_count", "created_at", "updated_at",)
+    ordering = ("created_at", "updated_at", "tags",)
+    readonly_fields = ("created_at", "updated_at",)
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
@@ -33,3 +33,4 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(UserProfile, CustomUserAdmin)
+admin.site.register(Tag)

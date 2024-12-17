@@ -2,9 +2,9 @@
 
     {% block content %}
     <!-- Content part -->
-    <main class="flex flex-col mx-auto relative z-10">
-        <div class="flex px-10 -mt-8 h-[80vh] max-w-screen-xl  gap-10 mx-auto">
-            <div class="bg-background p-4 border border-success w-2/3 m-auto shadow-lg shadow-blacky rounded-sm -top-16">
+    <main class="flex flex-col mx-auto relative z-10 items-center">
+        <div class="flex px-10 -mt-8 h-[80vh] max-w-screen-lg gap-10 mx-auto">
+            <div class="bg-background p-4 border border-success m-auto shadow-lg shadow-blacky rounded-sm -top-16">
                 <div class="text-lg font-mono">
                     <p class="-mb-3">
                         <span class="font-black text-primary">~</span><span class="ml-2 font-light"><span class="text-warning">request</span> <span class="text-subinfo">introduction</span></span>
@@ -42,7 +42,7 @@
                     </p>
                 </div>
             </div>
-            <div class="flex flex-col items-left w-1/3 gap-4 m-auto">
+            <div class="flex flex-col items-left gap-4 m-auto">
                 <div class="flex justify-center items-center transition ease-in-out delay-50 bg-background border rounded-sm border-subinfo w-16 h-16 hover:bg-lightbg hover:cursor-pointer">
                     <a href="https://www.artstation.com/gorillastyle">
                         {%include 'svgs/artstation_logo.svg' with class="w-16 h-16"%}
@@ -68,7 +68,7 @@
 
         <div class="max-w-screen-2xl mx-auto p-4">
             <p class="group font-mono text-2xl font-bold mt-2 relative">
-                <a href="#">
+                <a href="{% url 'posts' %}">
                     <span class="transition delay-50 ease-in text-warning inline-block group-hover:translate-x-1">></span> <span class="group-hover:text-highlight">Articles</span>
                 </a>
             </p>

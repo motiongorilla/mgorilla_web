@@ -33,8 +33,9 @@ class UserProfile(AbstractUser):
 class Article(models.Model):
     title: models.CharField = models.CharField(max_length=100)
     content = models.TextField(blank=True, default="")
-    word_count = models.IntegerField(blank=True, default="")
-    twitter_post = models.TextField(blank=True, default="")
+    thumbnail = models.URLField(max_length=500, default="")
+    post_summary = models.TextField(blank=True, default="")
+    tags = models.ManyToManyField("Tag")
     status = models.CharField(
         max_length=20,
         choices=ARTICLE_STATUS,
@@ -54,3 +55,10 @@ class Article(models.Model):
     def get_content_as_html(self):
         return markdown.markdown(self.content, extensions=["markdown.extensions.fenced_code"])
 
+
+class Tag(models.Model):
+    name = models.CharField(max_length=20)
+    slug = models.SlugField(max_length=20, unique=True)
+
+    def __str__(self):
+        return self.name
