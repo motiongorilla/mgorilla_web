@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+    {% block content %}
+<main class="flex flex-col max-w-screen-xl h-full mx-auto p-2 md:p-4 lg:p-10">
+    <div class="mx-auto">
+    {% if articles %}
+    {% for article in articles %}
+    <div class="transition ease-in-out delay-50 group flex flex-col items-left bg-background mb-8 p-4 shadow-lg shadow-blacky rounded-sm border border-success w-[764px] hover:border-dangermain hover:scale-[103%]">
+            <div class="flex mb-2 gap-2 iterms-start">
+                {% for tag in article.tags.all %}
+                <div class="text-sm text-textcolor font-semibold bg-subinfo p-1">{{tag}}</div>
+                {% endfor %}
+            </div>
+        <a href="{% url 'read_article' article.id %}">
+            <div class="flex items-center text-3xl font-bold tracking-tight mb-4 text-textcolor">
+                <span class="group-hover:text-warning">{{article.title}}</span>
+            </div>
+
+            <div>
+                <span id="article_summary" class="text-textcolor">
+                    <!--{{ article.get_content_as_html|truncatechars:200|safe }}-->
+                    {{ article.post_summary }}
+                </span>
+            </div>
+
+        </a>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>There're no articles to look at. Create a new one!</p>
+    {% endif %}
+    </div>
+</main>
+{% endblock %}
+{% block page_js %}
+{% endblock %}

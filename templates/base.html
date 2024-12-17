@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Motiongorilla</title>
+        <link rel="stylesheet" href="{% static 'output.css' %}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    </head>
+
+    <body class="inset-0 bg-gradient-to-br from-lightbg via-background to-blacky animate-gradient bg-[length:400%_400%] text-textcolor">
+        {% url 'create_article' as create_new_url %}
+        {% url 'dashboard' as articles_page %}
+        <div class="relative h-full w-full overflow-hidden">
+            <nav class="relative flex justify-between items-center px-10 py-4 border-b border-gray-300 shadow-md bg-lightbg z-10">
+                <div class="flex">
+                    <a href="{% url 'index' %}" class="text-xl text-textcolor font-semibold font-mono tracking-wide">motiongorilla</a>
+                </div>
+                <div class="flex gap-2">
+                    <a href="{% url 'index' %}" class="group transition ease-in delay-50 font-mono text-textcolor text-lg bg-subinfo px-2 hover:bg-infobg hover:shadow-md relative"><span class="transition delay-50 ease-in text-background group-hover:text-warning text-sm inline-block group-hover:translate-x-1 align-middle">></span> Home</a>
+                    <a href="{% url 'posts' %}" class="group transition ease-in delay-50 font-mono text-textcolor text-lg bg-subinfo px-2 hover:bg-infobg hover:shadow-md relative"><span class="transition delay-50 ease-in text-background group-hover:text-warning text-sm inline-block group-hover:translate-x-1 align-middle">></span> Articles</a>
+                </div>
+                <div class="flex items-center gap-6">
+                    {% if user.is_authenticated %}
+                    <a href="{% if request.path != create_new_url %}{{create_new_url}}{% else %}#{% endif %}" class="button primary">Create new article</a>
+                    <form method="POST" action="{% url 'account_logout' %}">
+                        {% csrf_token %}
+                        <a href="{{articles_page}}" class="hover:underline text-textcolor {% if request.path == articles_page %} font-semibold {% endif %}">My Articles</a>
+                        <button class="hover:underline text-textcolor ml-2" type="submit">Log out</button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'account_login' %}" class="button primary text-sm">Log in</a>
+                    <a href="{% url 'account_signup' %}" class="button secondary text-sm">Create new account</a>
+                    {% endif %}
+                </div>
+            </nav>
+            <div class="grid-cell-bg"></div>
+            <div class="dot"></div>
+            {% block content %}
+            {% endblock content %}
+            {% block page_js %}
+            {% endblock page_js %}
+        </div>
+    </body>
+    <script>
+    document.addEventListener('scroll', function() {
+        const scrollPosition = window.pageYOffset;
+        const dot = document.querySelector('.dot');
+        const gridCellBg = document.querySelector('.grid-cell-bg');
+
+        // Adjust the speed of the parallax effect
+        dot.style.transform = `translateY(-${scrollPosition * 0.1}px)`;
+        gridCellBg.style.transform = `translateY(-${scrollPosition * 0.1}px)`;
+    });
+    </script>
+</html>

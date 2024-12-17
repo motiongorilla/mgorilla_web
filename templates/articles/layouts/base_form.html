@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks%}
+
+    {% block content %}
+    <main class="max-w-screen-xl mx-auto mt-10">
+        <form method="POST" x-data="{
+            articleStatus: ''
+            }">
+            {% csrf_token %}
+
+            {% render_field form.title class="text-3xl py-2 bg-lightbg w-full rounded-md focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" placeholder="Title for the article..." %}
+
+            <div class="flex gap-10 mb-5 mt-1 items-center">
+                {% render_field form.status class="text-xs border-none rounded-md uppercase" x-bind::class="`article-status-${articleStatus}`" x-model.fill="articleStatus" %}
+            {% block article_stats %}
+            {% endblock article_stats %}
+            </div>
+
+            <div class="flex items-center mb-6 gap-2">
+                {% block buttons %}
+                {% endblock buttons %}
+            </div>
+
+            <article class="prose max-w-none bg-lightbg">
+                {% render_field form.content rows=20 %}
+            </article>
+                <p class="text-xl font-semibold mb-2">{{ form.post_summary.label }}</p>
+            <article class="prose max-w-none bg-lightbg">
+                {% render_field form.post_summary rows=10 %}
+                </article>
+
+        </form>
+    </main>
+    {% endblock content %}
+
+    {% block page_js %}
+    <script>
+    const contentMarkdown = new EasyMDE({
+        element: document.getElementById("id_content"),
+        spellChecker: false,
+        status: false,
+        forceSync: true,
+        indentWithTabs: true,
+        placeholder: "Write something...",
+        toolbar: true,
+        toolbar: ["bold", "italic", "heading", "|", "quote", "code", "preview"],
+    });
+    const tweetMarkdown = new EasyMDE({
+        element: document.getElementById("id_post_summary"),
+        spellChecker: true,
+        status: false,
+        forceSync: true,
+        indentWithTabs: false,
+        placeholder: "Write our tweet...",
+        toolbar: false,
+        maxHeight: "150px",
+    });
+    </script>
+    {% endblock page_js %}
