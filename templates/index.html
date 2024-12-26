@@ -3,8 +3,8 @@
     {% block content %}
     <!-- Content part -->
     <main class="flex flex-col mx-auto relative z-10 items-center">
-        <div class="flex px-10 -mt-8 h-[80vh] max-w-screen-lg gap-10 mx-auto">
-            <div class="bg-background p-4 border border-success m-auto shadow-lg shadow-blacky rounded-sm -top-16">
+        <div class="flex px-10 mt-8 h-[70vh] max-w-screen-lg gap-10 mx-auto">
+            <div class="bg-background p-4 border border-success m-auto shadow-lg shadow-blacky rounded-sm">
                 <div class="text-lg font-mono">
                     <p class="-mb-3">
                         <span class="font-black text-primary">~</span><span class="ml-2 font-light"><span class="text-warning">request</span> <span class="text-subinfo">introduction</span></span>
@@ -73,13 +73,12 @@
                 </a>
             </p>
         {% if articles %}
-        {% with total_articles=articles|length %}
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4 auto-cols-fr">
                 <div class="flex flex-col bg-background p-4 border border-dangermain rounded-sm shadow-md shadow-blacky text-textcolor justify-between h-full row-span-2">
                     <div>
                         <a class="flex items-center text-2xl block text-left font-bold font-mono tracking-tight h-16 overflow-hidden hover:text-highlight my-auto"
                             href="{% url 'read_article' articles.0.id %}">{{articles.0.title}}</a>
-                        <span id="article_summary"><p>{{ articles.0.get_content_as_html|truncatechars:600|striptags }}</p></span>
+                        <span id="article_summary"><p>{{ articles.0.post_summary|truncatechars:600|striptags }}</p></span>
                     </div>
                     <a class="font-semibold text-warning hover:underline text-right" href="{% url 'read_article' articles.0.id %}">Read more...</a>
                 </div>
@@ -87,7 +86,7 @@
                     <div>
                         <a class="flex items-center text-2xl block text-left font-bold font-mono tracking-tight h-16 overflow-hidden hover:text-highlight my-auto"
                             href="{% url 'read_article' articles.1.id %}">{{articles.1.title}}</a>
-                        <span id="article_summary">{{ articles.1.get_content_as_html|truncatechars:200|safe }}</span>
+                        <span id="article_summary">{{ articles.1.post_summary|truncatechars:200|safe }}</span>
                     </div>
                     <a class="font-semibold text-warning hover:underline text-right" href="{% url 'read_article' articles.1.id %}">Read more...</a>
                 </div>
@@ -95,7 +94,7 @@
                     <div>
                         <a class="flex items-center text-2xl block text-left font-bold font-mono tracking-tight h-16 overflow-hidden hover:text-highlight my-auto"
                             href="{% url 'read_article' articles.2.id %}">{{articles.2.title}}</a>
-                        <span id="article_summary">{{ articles.2.get_content_as_html|truncatechars:200|safe }}</span>
+                        <span id="article_summary">{{ articles.2.post_summary|truncatechars:200|safe }}</span>
                     </div>
                     <a class="font-semibold text-warning hover:underline text-right" href="{% url 'read_article' articles.2.id %}">Read more...</a>
                 </div>
@@ -103,13 +102,12 @@
                     <div>
                         <a class="flex items-center text-2xl block text-left font-bold font-mono tracking-tight h-16 overflow-hidden hover:text-highlight my-auto"
                             href="{% url 'read_article' articles.3.id %}">{{articles.3.title}}</a>
-                        <span id="article_summary">{{ articles.3.get_content_as_html|truncatechars:450|safe }}</span>
+                        <span id="article_summary">{{ articles.3.post_summary|truncatechars:450|safe }}</span>
                     </div>
                     <a class="font-semibold text-warning hover:underline text-right" href="{% url 'read_article' articles.3.id %}">Read more...</a>
                 </div>
             </div>
         </div>
-        {% endwith %}
         {% else %}
         <p>There're no articles to look at.</p>
         {% endif %}

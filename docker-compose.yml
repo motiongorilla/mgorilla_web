@@ -27,5 +27,17 @@ services:
     depends_on:
       db:
         condition: service_healthy
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile.streamlit
+    volumes:
+      - .:/code
+    ports:
+      - "8501:8501"
+    restart: unless-stopped
+    depends_on:
+      web:
+        condition: service_started
 volumes:
   postgres_data:

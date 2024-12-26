@@ -14,20 +14,27 @@
     </head>
 
     <body class="inset-0 bg-gradient-to-br from-lightbg via-background to-blacky animate-gradient bg-[length:400%_400%] text-textcolor">
-        {% url 'create_article' as create_new_url %}
+        {% url 'create_article' as new_article_url %}
+        {% url 'create_portfolio' as new_portfolio_url %}
         {% url 'dashboard' as articles_page %}
         <div class="relative h-full w-full overflow-hidden">
-            <nav class="relative flex justify-between items-center px-10 py-4 border-b border-gray-300 shadow-md bg-lightbg z-10">
-                <div class="flex">
+            <nav class="relative grid grid-cols-3 items-center px-10 py-4 border-b border-gray-300 shadow-md bg-lightbg z-10">
+                <div class="flex mr-auto">
                     <a href="{% url 'index' %}" class="text-xl text-textcolor font-semibold font-mono tracking-wide">motiongorilla</a>
                 </div>
                 <div class="flex gap-2">
-                    <a href="{% url 'index' %}" class="group transition ease-in delay-50 font-mono text-textcolor text-lg bg-subinfo px-2 hover:bg-infobg hover:shadow-md relative"><span class="transition delay-50 ease-in text-background group-hover:text-warning text-sm inline-block group-hover:translate-x-1 align-middle">></span> Home</a>
-                    <a href="{% url 'posts' %}" class="group transition ease-in delay-50 font-mono text-textcolor text-lg bg-subinfo px-2 hover:bg-infobg hover:shadow-md relative"><span class="transition delay-50 ease-in text-background group-hover:text-warning text-sm inline-block group-hover:translate-x-1 align-middle">></span> Articles</a>
+                    <a href="{% url 'index' %}" class="group transition ease-out font-mono text-textcolor text-lg bg-subinfo px-2 hover:bg-infobg hover:shadow-md relative"><span class="transition ease-in text-background group-hover:text-warning text-sm inline-block group-hover:translate-x-1 align-middle">></span> Home</a>
+                    <a href="{% url 'posts' %}" class="group transition ease-out font-mono text-textcolor text-lg bg-subinfo px-2 hover:bg-infobg hover:shadow-md relative"><span class="transition ease-in text-background group-hover:text-warning text-sm inline-block group-hover:translate-x-1 align-middle">></span> Articles</a>
+                    <a href="{% url 'portfolio' %}" class="group transition ease-out font-mono text-textcolor text-lg bg-subinfo px-2 hover:bg-infobg hover:shadow-md relative"><span class="transition ease-in text-background group-hover:text-warning text-sm inline-block group-hover:translate-x-1 align-middle">></span> Portfolio</a>
+                    <a href="{% url 'uememparser' %}" class="group transition ease-out font-mono text-textcolor text-lg bg-subinfo px-2 hover:bg-infobg hover:shadow-md relative"><span class="transition ease-in text-background group-hover:text-warning text-sm inline-block group-hover:translate-x-1 align-middle">></span> UE Memory report parser</a>
                 </div>
-                <div class="flex items-center gap-6">
+                <div class="flex items-center ml-auto gap-6">
                     {% if user.is_authenticated %}
-                    <a href="{% if request.path != create_new_url %}{{create_new_url}}{% else %}#{% endif %}" class="button primary">Create new article</a>
+                    {% if request.path == "/portfolio/" %}
+                    <a href="{% if request.path != new_portfolio_url %}{{new_portfolio_url}}{% else %}#{% endif %}" class="button primary">Add new portfolio</a>
+                    {% else %}
+                    <a href="{% if request.path != new_article_url %}{{new_article_url}}{% else %}#{% endif %}" class="button primary">Create new article</a>
+                    {% endif %}
                     <form method="POST" action="{% url 'account_logout' %}">
                         {% csrf_token %}
                         <a href="{{articles_page}}" class="hover:underline text-textcolor {% if request.path == articles_page %} font-semibold {% endif %}">My Articles</a>

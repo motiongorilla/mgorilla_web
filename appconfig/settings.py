@@ -57,6 +57,7 @@ THIRD_PARTY_APPS = [
 PROJECT_APPS = [
     "articles.apps.ArticlesConfig",
     "portfolio.apps.PortfolioConfig",
+    "uememparser.apps.UememparserConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -166,6 +167,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 STATICFILES_DIRS = [
     BASE_DIR / "static"

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+    {% block content %}
+    <main class="flex flex-col mx-auto relative z-10 items-center">
+        <div class="flex flex-col items-center max-w-screen-xl mx-auto">
+            {% if works %}
+            <div class="grid grid-cols-3 mt-24">
+                {% for pwork in works %}
+                <a href="{% url 'portfolio_work' pwork.id %}">
+                <div class="relative group flex items-center justify-center w-96 h-96 border rounded-sm border-background bg-blacky shadow-lg overflow-hidden">
+                    <img src="{{pwork.thumbnail.url}}" class="relative object-cover w-96 h-96 object-center">
+                    {% if pwork.tags.all %}
+                    <div class="absolute top-0 left-0 flex items-center gap-2 p-2">
+                        {% for tag in pwork.tags.all%}
+                        <div class="text-textcolor text-[10px] bg-primary font-semibold p-1 uppercase font-sans shadow-sm">
+                            {{tag}}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <div class="absolute inset-0 bg-blacky opacity-0 group-hover:opacity-85 transition-opacity"></div>
+                    <div class="absolute text-center text-3xl font-semibold uppercase font-sans text-textcolor opacity-0 group-hover:opacity-100">
+                        {{pwork.title}}
+                    </div>
+                </div>
+                </a>
+                {% endfor %}
+                {% else %}
+                <p>This is where my work will be.</p>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+    {% endblock %}
