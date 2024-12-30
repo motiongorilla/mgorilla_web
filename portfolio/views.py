@@ -1,14 +1,10 @@
 from django.shortcuts import redirect, render
 
 from portfolio.forms import (
-    ImageElementFormset,
-    MultipleImageElementForm,
-    PortfolioMediaElementFormset,
     PortfolioPieceForm,
-    TextElementFormset,
-    VideoElementFormset,
+    SingleImageElementForm,
 )
-from portfolio.models import PortfolioPiece
+from portfolio.models import ImageElement, PortfolioPiece
 
 
 def portfolio_list(request):
@@ -22,42 +18,40 @@ def portfolio_work(request, **kwargs):
     context = {"portoflio_work": work}
     return render(request, "portfolio/portfolio_work.html", context=context)
 
+def image_element(request):
+    counter = int(request.GET.get("element_order", 0))
+
+    form = SingleImageElementForm(initial={"order":counter})
+    context = {"image_form": form}
+    return render(request, "portfolio/components/image_element.html", context)
+
+def image_detail(request, pk):
+    image = ImageElement.objects.get(pk=pk)
+    context = {"image": image}
+    return render(request, "portfolio/components/image_detail.html", context)
+
 def create_portfolio_piece(request):
+    portfolio_form = PortfolioPieceForm()
+    image_element = SingleImageElementForm()
+
     if request.method == "POST":
         portfolio_form = PortfolioPieceForm(request.POST, request.FILES)
-
-        multiple_images = MultipleImageElementForm(request.POST, request.FILES)
-        image_formset = ImageElementFormset(request.POST, request.FILES, prefix="images")
-        video_formset = VideoElementFormset(request.POST, request.FILES, prefix="videos")
-        text_formset = TextElementFormset(request.POST, prefix="texts")
+        image_element = SingleImageElementForm(request.POST, request.FILES)
 
         if portfolio_form.is_valid():
             portfolio_piece = portfolio_form.save()
 
-            if image_formset.is_valid():
-                image_formset.instance = portfolio_piece
-                image_formset.save()
-
-            if video_formset.is_valid():
-                video_formset.instance = portfolio_piece
-                video_formset.save()
-
-            if text_formset.is_valid():
-                text_formset.instance = portfolio_piece
-                text_formset.save()
+            # Update ImageElements with the foreign key of the PortfolioPiece
+            image_elements = ImageElement.objects.filter(portfolio_piece__isnull=True)
+            for image in image_elements:
+                image.portfolio_piece = portfolio_piece
+                image.save()
 
             return redirect("portfolio_work", pk=portfolio_piece.pk)
-    else:
-        portfolio_form = PortfolioPieceForm()
-        multiple_images = MultipleImageElementForm()
-        image_formset = ImageElementFormset(prefix="images")
-        video_formset = VideoElementFormset(prefix="videos")
-        text_formset = TextElementFormset(prefix="texts")
 
-    context = {"portfolio_form": portfolio_form,
-               "multiple_images_form": multiple_images,
-               "image_formset": image_formset,
-               "video_formset": video_formset,
-               "text_formset": text_formset}
+        if "img" in request.FILES and image_element.is_valid():
+            image = image_element.save()
+            return redirect("image_detail", pk=image.pk)
 
+    context = {"portfolio_form": portfolio_form, "image_form": image_element}
     return render(request, "portfolio/create_portfolio_piece.html", context)

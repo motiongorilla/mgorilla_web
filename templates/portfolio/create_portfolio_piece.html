@@ -4,76 +4,42 @@
 
     {% block content %}
     <main class="max-w-screen-xl mx-auto mt-10">
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <button type="submit" class="button primary">Create protfolio piece</button>
-            {% render_field portfolio_form.title class="text-3xl py-2 bg-lightbg w-full rounded-md focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" placeholder="Project title" %}
-            <article class="prose max-w-none bg-lightbg">
-                {% render_field portfolio_form.description rows=10 %}
-            </article>
-            {% render_field portfolio_form.tags %}
-            {% render_field portfolio_form.thumbnail %}
-            {% render_field portfolio_form.status class="text-xs border-none rounded-md uppercase" %}
-
-            <div class="flex flex-col items-center max-w-screen-xl mx-auto">
-            <h3 class="title mb-8">Images</h3>
-            <div class="rounded-md border border-important bg-infobg p-4 shadow-md w-36">
-                <label for="id_imgs" class="flex flex-col items-center gap-2 cursor-pointer">
-                    <span class="text-textcolor font-medium">Upload file</span>
-                    {%include 'svgs/file_upload.svg' with class="w-10 h-10"%}
-                </label>
-                <span class="hidden">{% render_field multiple_images_form.imgs %}</span>
+        <div class="flex items-start">
+            <div class="flex flex-col items-center max-w-screel-lg mx-auto" x-data>
+                <ul id="mediaelements" x-sort></ul>
             </div>
+            <div class="flex flex-col items-start max-w-screen-sm gap-6">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <button type="submit" class="button primary">Create protfolio piece</button>
+                    {% render_field portfolio_form.title class="text-3xl py-2 bg-lightbg w-full rounded-md focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" placeholder="Project title" %}
+                    <article class="prose max-w-none bg-lightbg">
+                        {% render_field portfolio_form.description rows=10 %}
+                    </article>
+                    {% render_field portfolio_form.tags %}
+                    {% render_field portfolio_form.status class="text-xs border-none rounded-md uppercase" %}
 
-                <div id="images-formset" class="grid grid-cols-4">
-                    {{ image_formset.management_form }}
-                </div>
-                <div class="images-empty-form flex flex-col items-center" style="display: none;">
-                    <div class="border rounded-sm border-important bg-infobg overflow-hidden">
-                        {% render_field image_formset.empty_form.img %}
+                    <h3 class="title mb-8">Thumbnail</h3>
+                    <div class="rounded-md border border-important bg-infobg p-4 shadow-md w-36">
+                        <label for="id_imgs" class="flex flex-col items-center gap-2 cursor-pointer">
+                            <span class="text-textcolor font-medium">Upload file</span>
+                            {% include 'svgs/file_upload.svg' with class="w-10 h-10" %}
+                        </label>
+                        {% render_field portfolio_form.thumbnail %}
                     </div>
-                    <div class="flex items-center rounded-sm border-important bg-infobg justify-between">
-                        {% render_field image_formset.empty_form.caption %}
-                        {% render_field image_formset.empty_form.DELETE %}
-                    </div>
+                </form>
+                <div x-data="{counter: -1}">
+                    <button type="button" hx-get="{%url 'add_image_element'%}"
+                        hx-target="#mediaelements" hx-swap="beforeend" x-bind:hx-vals='`{"element_order": ${counter}}`'
+                        class="button secondary" x-on:click="counter++">Add image</button>
                 </div>
             </div>
-
-            <div class="flex flex-col items-center max-w-screen-xl mx-auto mt-25">
-                <h3 class="title mb-8">Videos</h3>
-                <button type="button" onclick="addForm('videos')" class="button secondary">Add video</button>
-                <div id="videos-formset" class="grid grid-cols-4">
-                    {{ video_formset.management_form }}
-                </div>
-                <div class="videos-empty-form flex flex-col items-center" style="display: none;">
-                    <div class="border rounded-sm border-important bg-infobg overflow-hidden">
-                        {% render_field video_formset.empty_form.video %}
-                    </div>
-                    <div class="flex items-center rounded-sm border-important bg-infobg justify-between">
-                        {% render_field video_formset.empty_form.caption %}
-                        {% render_field video_formset.empty_form.DELETE %}
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex flex-col items-center max-w-screen-xl mx-auto mt-25">
-                <h3 class="title mb-8">Texts</h3>
-                <button type="button" onclick="addForm('texts')" class="button secondary">Add text element</button>
-                <div id="texts-formset" class="grid grid-cols-4">
-                    {{ text_formset.management_form }}
-                </div>
-                <div class="texts-empty-form" style="display: none;">
-                    {{ text_formset.empty_form.as_p }}
-                </div>
-            </div>
-
-        </form>
+        </div>
     </main>
     {% endblock %}
 
     {% block page_js %}
     <script>
-
     const contentMarkdown = new EasyMDE({
         element: document.getElementById("id_description"),
         spellChecker: false,
@@ -84,48 +50,5 @@
         toolbar: true,
         toolbar: ["bold", "italic", "heading", "|", "quote", "code", "preview"],
     });
-
-    document.querySelector('input[name="imgs"]').addEventListener('change', function(event) {
-        var files = event.target.files;
-        var formCount = document.querySelectorAll('.images-form').length;
-        var emptyForm = document.querySelector('.images-empty-form');
-
-        for (var i = 0; i < files.length; i++) {
-            var newForm = emptyForm.cloneNode(true);
-            newForm.classList.remove('images-empty-form');
-            newForm.classList.add('images-form');
-            newForm.style.display = 'block';
-            newForm.innerHTML = newForm.innerHTML.replace(/__prefix__/g, formCount + i);
-
-            var fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.name = `images-${formCount + i}-img`;
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(files[i]);
-            const fileList = dataTransfer.files;
-            fileInput.files = fileList;
-
-            newForm.querySelector('input[type="file"]').replaceWith(fileInput);
-
-            document.querySelector('#images-formset').appendChild(newForm);
-        }
-
-        document.querySelector('#id_images-TOTAL_FORMS').value = formCount + files.length;
-    });
-
-    function addForm(prefix) {
-        var formCount = document.querySelectorAll(`.${prefix}-form`).length;
-        var emptyForm = document.querySelector(`.${prefix}-empty-form`);
-        if (emptyForm) {
-            var newForm = emptyForm.cloneNode(true);
-            newForm.classList.remove(`${prefix}-empty-form`);
-            newForm.classList.add(`${prefix}-form`);
-            newForm.style.display = "block";
-            newForm.innerHTML = newForm.innerHTML.replace(/__prefix__/g, formCount);
-            document.querySelector(`#${prefix}-formset`).appendChild(newForm);
-        } else {
-            console.error(`Empty form template for ${prefix} not found.`);
-        }
-    }
     </script>
     {% endblock %}

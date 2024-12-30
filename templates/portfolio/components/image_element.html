@@ -1,0 +1,19 @@
+{% load widget_tweaks %}
+
+<li hx-target="this" hx-swap="outerHTML">
+    <form method="POST" enctype="multipart/form-data" hx-post=".">
+        {% csrf_token %}
+        <div class=" rounded-md border border-important bg-infobg p-4 shadow-md">
+            <label for="id_img" class="flex flex-col items-center gap-2 cursor-pointer w-full h-20">
+                <span class="text-textcolor font-medium">Upload file</span>
+                {% include 'svgs/file_upload.svg' with class="w-10 h-10" %}
+            </label>
+            <div class="flex items-center">
+                {% render_field image_form.img %}
+                {% render_field image_form.caption class="text-base py-2 bg-lightbg rounded-md focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" %}
+                {% render_field image_form.order class="text-base py-2 bg-lightbg rounded-md focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" x-ref="el_order" %}
+            </div>
+        </div>
+        <button type="submit" class="button" >Submit</button>
+    </form>
+</li>
