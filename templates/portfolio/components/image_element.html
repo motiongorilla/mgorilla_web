@@ -1,6 +1,6 @@
 {% load widget_tweaks %}
 
-<li hx-target="this" hx-swap="outerHTML">
+<div hx-target="this" hx-swap="outerHTML" class="sortable-item" data-id="{{ image_form.instance.id }}" data-order="{{ image_form.instance.order }}">
     <form method="POST" enctype="multipart/form-data" hx-post=".">
         {% csrf_token %}
         <div class=" rounded-md border border-important bg-infobg p-4 shadow-md">
@@ -11,9 +11,9 @@
             <div class="flex items-center">
                 {% render_field image_form.img %}
                 {% render_field image_form.caption class="text-base py-2 bg-lightbg rounded-md focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" %}
-                {% render_field image_form.order class="text-base py-2 bg-lightbg rounded-md focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" x-ref="el_order" %}
+                {% render_field image_form.order class="text-base py-2 bg-lightbg rounded-md focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" %}
             </div>
         </div>
         <button type="submit" class="button" >Submit</button>
     </form>
-</li>
+</div>

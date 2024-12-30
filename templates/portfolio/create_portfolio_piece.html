@@ -5,9 +5,9 @@
     {% block content %}
     <main class="max-w-screen-xl mx-auto mt-10">
         <div class="flex items-start">
-            <div class="flex flex-col items-center max-w-screel-lg mx-auto" x-data>
-                <ul id="mediaelements" x-sort></ul>
-            </div>
+            <form id="mediaelements" class="sortable flex flex-col items-center max-w-screel-lg mx-auto" hx-trigger="end" hx-post="/sort">
+                  <div class="htmx-indicator">Updating...</div>
+            </form>
             <div class="flex flex-col items-start max-w-screen-sm gap-6">
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
@@ -40,6 +40,39 @@
 
     {% block page_js %}
     <script>
+    htmx.onLoad(function(content) {
+        var sortables = content.querySelectorAll(".sortable");
+        for (var i = 0; i < sortables.length; i++) {
+            var sortable = sortables[i];
+            var sortableInstance = new Sortable(sortable, {
+                animation: 150,
+                ghostClass: 'primary',
+
+                // Make the `.htmx-indicator` unsortable
+                filter: ".htmx-indicator",
+                onMove: function (evt) {
+                    return evt.related.className.indexOf('htmx-indicator') === -1;
+                },
+
+                onEnd: function (evt) {
+                    const sortableElements = document.querySelectorAll('.sortable-item');
+                    console.log(sortableElements)
+                    sortableElements.forEach((el, index) => {
+                        const orderField = el.querySelector('input[name$="order"]');
+                        if (orderField) {
+                            orderField.value = index;
+                        }
+                    });
+                }
+            });
+
+            // Re-enable sorting on the `htmx:afterSwap` event
+            sortable.addEventListener("htmx:afterSwap", function() {
+                sortableInstance.option("disabled", false);
+            });
+        }
+    })
+
     const contentMarkdown = new EasyMDE({
         element: document.getElementById("id_description"),
         spellChecker: false,
