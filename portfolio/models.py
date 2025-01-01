@@ -48,8 +48,9 @@ class PortfolioMediaElement(models.Model):
 class ImageElement(models.Model):
     portfolio_piece = models.ForeignKey(PortfolioPiece, related_name="image_elements", on_delete=models.CASCADE, blank=True, null=True)
     img = models.ImageField(upload_to="portfolio_media/")
-    caption = models.CharField(max_length=150)
+    caption = models.CharField(max_length=150, blank=True)
     order = models.PositiveIntegerField(default=0)
+    temp = models.BooleanField(default=True)
 
     def __str__(self):
         return self.caption

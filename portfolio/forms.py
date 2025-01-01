@@ -12,7 +12,7 @@ class PortfolioPieceForm(forms.ModelForm):
 class SingleImageElementForm(forms.ModelForm):
     class Meta:
         model = ImageElement
-        fields = ["img", "caption", "order"]
+        fields = ["img", "caption", "order", "temp"]
 
 
 class MultipleImageElementForm(forms.ModelForm):

@@ -6,7 +6,6 @@
     <main class="max-w-screen-xl mx-auto mt-10">
         <div class="flex items-start">
             <form id="mediaelements" class="sortable flex flex-col items-center max-w-screel-lg mx-auto" hx-trigger="end" hx-post="/sort">
-                  <div class="htmx-indicator">Updating...</div>
             </form>
             <div class="flex flex-col items-start max-w-screen-sm gap-6">
                 <form method="POST" enctype="multipart/form-data">
@@ -14,7 +13,7 @@
                     <button type="submit" class="button primary">Create protfolio piece</button>
                     {% render_field portfolio_form.title class="text-3xl py-2 bg-lightbg w-full rounded-md focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" placeholder="Project title" %}
                     <article class="prose max-w-none bg-lightbg">
-                        {% render_field portfolio_form.description rows=10 %}
+                        {% render_field portfolio_form.description rows=5 class="w-full text-textcolor bg-lightbg" %}
                     </article>
                     {% render_field portfolio_form.tags %}
                     {% render_field portfolio_form.status class="text-xs border-none rounded-md uppercase" %}
@@ -48,12 +47,6 @@
                 animation: 150,
                 ghostClass: 'primary',
 
-                // Make the `.htmx-indicator` unsortable
-                filter: ".htmx-indicator",
-                onMove: function (evt) {
-                    return evt.related.className.indexOf('htmx-indicator') === -1;
-                },
-
                 onEnd: function (evt) {
                     const sortableElements = document.querySelectorAll('.sortable-item');
                     console.log(sortableElements)
@@ -72,16 +65,5 @@
             });
         }
     })
-
-    const contentMarkdown = new EasyMDE({
-        element: document.getElementById("id_description"),
-        spellChecker: false,
-        status: false,
-        forceSync: true,
-        indentWithTabs: true,
-        placeholder: "Describe the work.",
-        toolbar: true,
-        toolbar: ["bold", "italic", "heading", "|", "quote", "code", "preview"],
-    });
     </script>
     {% endblock %}

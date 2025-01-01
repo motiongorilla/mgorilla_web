@@ -1,4 +1,15 @@
-<div hx-target="this">
-    <img src="{{ image.img.url }}">
-    <p>{{ image.caption }}</p>
+{% load widget_tweaks %}
+<div hx-target="this" class="sortable-item" class="flex">
+    <form method="POST" enctype="multipart/form-data" hx-post="{% url 'image_detail' image.id %}"
+    hx-trigger="change from:form delay:500ms">
+        {% csrf_token %}
+        <img src="{{ image.img.url }}">
+        <p>{% render_field form.caption %}</p>
+        <div class="hidden">
+            {% render_field form.img type="hidden" %}
+            {% render_field form.temp type="hidden" %}
+            {% render_field form.order type="hidden" %}
+        </div>
+        <button type="submit" class="button warning">Update image</button>
+    </form>
 </div>
