@@ -3,42 +3,114 @@
 {% load widget_tweaks %}
 
     {% block content %}
-    <main class="max-w-screen-xl mx-auto mt-10">
-        <div class="flex items-start">
-            <form id="mediaelements" class="sortable flex flex-col items-center max-w-screel-lg mx-auto" hx-trigger="end" hx-post="/sort">
-            </form>
-            <div class="flex flex-col items-start max-w-screen-sm gap-6">
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <button type="submit" class="button primary">Create protfolio piece</button>
-                    {% render_field portfolio_form.title class="text-3xl py-2 bg-lightbg w-full rounded-md focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" placeholder="Project title" %}
-                    <article class="prose max-w-none bg-lightbg">
-                        {% render_field portfolio_form.description rows=5 class="w-full text-textcolor bg-lightbg" %}
+    <main class="max-w-screen-xl mx-auto mt-10 min-h-screen">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="flex gap-2 w-full mb-4">
+                {% render_field portfolio_form.title class="text-2xl py-2 bg-lightbg w-full rounded-sm focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" placeholder="Project title" %}
+                {% render_field portfolio_form.status class="text-xs border-1 rounded-sm uppercase bg-blacky" %}
+            </div>
+            <div class="flex items-start gap-4">
+                <div id="mediaelements" class="sortable flex flex-col items-center w-[940px] mx-auto" hx-trigger="end">
+                </div>
+                <div class="flex flex-col items-start max-w-screen-sm gap-2 max-w-[330px]">
+                    <p class="mb-1">Description</p>
+                    <article class="prose bg-lightbg">
+                        {% render_field portfolio_form.description rows=5 class="w-full text-textcolor bg-lightbg" placeholder="Desciption goes here..." %}
                     </article>
-                    {% render_field portfolio_form.tags %}
-                    {% render_field portfolio_form.status class="text-xs border-none rounded-md uppercase" %}
-
-                    <h3 class="title mb-8">Thumbnail</h3>
-                    <div class="rounded-md border border-important bg-infobg p-4 shadow-md w-36">
-                        <label for="id_imgs" class="flex flex-col items-center gap-2 cursor-pointer">
-                            <span class="text-textcolor font-medium">Upload file</span>
-                            {% include 'svgs/file_upload.svg' with class="w-10 h-10" %}
+                    <div x-data="{img_src: '', img_preview: false}" class="w-full">
+                        <img x-bind:src="img_src" x-show="img_preview" class="m-0 h-64 object-fill object-center">
+                    <div class="rounded-md border border-infobg bg-background p-4 shadow-md h-24 overflow-hidden" x-show="!img_preview">
+                        <label for="thumbnail" class="flex flex-col items-center gap-2 cursor-pointer">
+                            <span class="text-textcolor font-medium">Upload thumbnail</span>
+                            {% include 'svgs/file_upload.svg' with class="h-8 w-8 fill-textcolor stroke-important" %}
                         </label>
-                        {% render_field portfolio_form.thumbnail %}
+                        {% render_field portfolio_form.thumbnail id="thumbnail" class="hidden" @change="img_src=URL.createObjectURL($event.target.files[0]); img_preview = true" %}
                     </div>
-                </form>
-                <div x-data="{counter: -1}">
-                    <button type="button" hx-get="{%url 'add_image_element'%}"
-                        hx-target="#mediaelements" hx-swap="beforeend" x-bind:hx-vals='`{"element_order": ${counter}}`'
-                        class="button secondary" x-on:click="counter++">Add image</button>
+                    </div>
+
+                    <div class="w-full" x-data="multiSelect()">
+                        <div class="relative">
+                            <label for="multi-select" class="block text-sm font-medium text-textcolor mb-1">Select tags:</label>
+                            <div class="mt-1 relative">
+                                <button type="button" @click="open = !open"
+                                    class="relative w-full bg-blacky border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <span class="block truncate max-w-64"
+                                        x-text="selectedOptions.length ? selectedOptions.join(', ') : 'Select options'"></span>
+                                    <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                            fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                </button>
+
+                                <div x-show="open" @click.away="open = false"
+                                    class="absolute z-20 mt-1 w-full bg-blacky shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+                                    style="display: none;">
+                                    <template x-for="option in options" :key="option">
+                                        <div @click="toggleOption(option)"
+                                            class="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-important hover:text-white">
+                                            <span x-text="option" :class="{ 'font-semibold': selectedOptions.includes(option) }"
+                                                class="block truncate" @click="toggleTag(option)"></span>
+                                            <span x-show="selectedOptions.includes(option)"
+                                                class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 hover:text-white">
+                                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                    fill="currentColor">
+                                                    <path fill-rule="evenodd"
+                                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% render_field portfolio_form.tags title="tags" class="hidden" %}
+                    <div x-data="{counter: -1}">
+                        <button type="button" hx-get="{%url 'add_image_element'%}"
+                            hx-target="#mediaelements" hx-swap="beforeend" x-bind:hx-vals='`{"element_order": ${counter}}`'
+                            class="button secondary" x-on:click="counter++">Add image</button>
+                    </div>
+                    <button type="submit" class="button primary">Create protfolio piece</button>
                 </div>
             </div>
-        </div>
+        </form>
     </main>
     {% endblock %}
 
     {% block page_js %}
     <script>
+    function multiSelect() {
+        const dataFromDjango = JSON.parse('{{ data|safe|escapejs }}');
+        const options = dataFromDjango.map(item=>item.fields.name);
+        return {
+            open: false,
+            options: dataFromDjango.map(item=>item.fields.name),
+            selectedOptions: [],
+            toggleOption(option) {
+                if (this.selectedOptions.includes(option)) {
+                    this.selectedOptions = this.selectedOptions.filter(item => item !== option);
+                } else {
+                    this.selectedOptions.push(option);
+                }
+            },
+            toggleTag(option) {
+                var tag_elements = document.getElementById("id_tags");
+                for(const child of tag_elements.children){
+                    var checkbox = child.getElementsByTagName("input")[0];
+                    check_name = child.firstElementChild.textContent.trim();
+                    if (option === check_name){
+                        checkbox.checked = !checkbox.checked;
+                    }
+                }
+            }
+        }
+    }
     htmx.onLoad(function(content) {
         var sortables = content.querySelectorAll(".sortable");
         for (var i = 0; i < sortables.length; i++) {
@@ -49,7 +121,6 @@
 
                 onEnd: function (evt) {
                     const sortableElements = document.querySelectorAll('.sortable-item');
-                    console.log(sortableElements)
                     sortableElements.forEach((el, index) => {
                         const orderField = el.querySelector('input[name$="order"]');
                         if (orderField) {
@@ -65,5 +136,26 @@
             });
         }
     })
+
+    function removeElement(button) {
+        // Find the parent element (the element to be removed)
+        const removableElement = button.closest('.sortable-item');
+
+        // Remove the element from the DOM
+        removableElement.remove();
+
+        // Update the order for the remaining elements
+        const sortableElements = document.querySelectorAll('.sortable-item');
+        sortableElements.forEach((el, index) => {
+            const orderField = el.querySelector('input[name$="order"]');
+            if (orderField) {
+                orderField.value = index; // Update the order value
+            }
+        });
+
+        // Optionally, log the update to the console
+        console.log("Element removed and order updated.");
+    }
+
     </script>
     {% endblock %}

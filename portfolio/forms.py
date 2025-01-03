@@ -1,6 +1,6 @@
 from django import forms
 
-from portfolio.models import ImageElement, PortfolioMediaElement, PortfolioPiece, TextElement, VideoElement
+from portfolio.models import ImageElement, PortfolioMediaElement, PortfolioPiece, ProjectTag, TextElement, VideoElement
 
 
 class PortfolioPieceForm(forms.ModelForm):
@@ -8,11 +8,16 @@ class PortfolioPieceForm(forms.ModelForm):
         model = PortfolioPiece
         fields = ["title", "description", "tags", "thumbnail", "status"]
 
+    tags = forms.ModelMultipleChoiceField(
+        queryset=ProjectTag.objects.all(),
+        widget=forms.CheckboxSelectMultiple
+    )
+
 
 class SingleImageElementForm(forms.ModelForm):
     class Meta:
         model = ImageElement
-        fields = ["img", "caption", "order", "temp"]
+        fields = ["img", "caption", "order"]
 
 
 class MultipleImageElementForm(forms.ModelForm):

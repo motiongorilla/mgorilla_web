@@ -1,20 +1,17 @@
 {% load widget_tweaks %}
 
-<div hx-target="this" hx-swap="outerHTML" class="sortable-item" data-id="{{ image_form.instance.id }}" data-order="{{ image_form.instance.order }}">
-    <form method="POST" enctype="multipart/form-data" hx-post=".">
-        {% csrf_token %}
-        <div class="rounded-md border border-important bg-infobg p-4 shadow-md">
-            <label for="id_img" class="flex flex-col items-center gap-2 cursor-pointer w-full h-20">
-                <span class="text-textcolor font-medium">Upload file</span>
-                {% include 'svgs/file_upload.svg' with class="w-10 h-10" %}
-            </label>
-            <div class="flex items-center">
-                {% render_field image_form.img %}
-                {% render_field image_form.caption class="text-base py-2 bg-lightbg rounded-md focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" %}
-                {% render_field image_form.order class="text-base py-2 bg-lightbg rounded-md focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" type="hidden" %}
-                {% render_field image_form.temp type="hidden" %}
-            </div>
+<div class="relative w-full removable sortable-item mb-2" x-data="{src:'', image_preview: false}" id="image_element_{{counter}}">
+    <img x-bind:src="src" alt="preview" x-show="image_preview" class="relative m-0 object-top">
+    {% render_field image_form.caption class="w-full text-base bg-blacky rounded-sm mt-1" x-show="image_preview" style="display: none;" %}
+    <button type="button" class="absolute top-0.5 left-1 bg-background rounded-sm w-10 h-10 shadow-sm opacity-0 hover:opacity-75 font-sans font-extrabold" onclick="removeElement(this)">X</button>
+    <div class="rounded-sm border border-infobg bg-background p-4 shadow-md" x-show="!image_preview">
+        <label for="id_img_{{counter}}" class="flex flex-col items-center gap-2 cursor-pointer w-full h-20">
+            <span class="text-textcolor font-medium">Upload file</span>
+            {% include 'svgs/file_upload.svg' with class="w-10 h-10 stroke-important fill-textcolor" %}
+        </label>
+        <div>
+            {% render_field image_form.img @change="src=URL.createObjectURL($event.target.files[0]); image_preview=true" class="hidden" %}
+            {% render_field image_form.order class="text-base py-2 bg-lightbg rounded-md focus:ring-1 focus:border-secondary focus:border-1 focus:ring-accent" type="hidden" %}
         </div>
-        <button type="submit" class="button" >Submit</button>
-    </form>
+    </div>
 </div>

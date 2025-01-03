@@ -50,7 +50,6 @@ class ImageElement(models.Model):
     img = models.ImageField(upload_to="portfolio_media/")
     caption = models.CharField(max_length=150, blank=True)
     order = models.PositiveIntegerField(default=0)
-    temp = models.BooleanField(default=True)
 
     def __str__(self):
         return self.caption

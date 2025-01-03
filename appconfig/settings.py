@@ -71,7 +71,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
-    "portfolio.middleware.DeleteTemporaryImagesMiddleware",
 ]
 
 if DEBUG:
